@@ -2,7 +2,7 @@
   <div>
     <div class="container">
       <div class="header">
-        <el-button type="primary" icon="el-icon-edit">{{ti}}</el-button>
+        <el-button type="primary" icon="el-icon-edit" @click="handleAdd">{{ti}}</el-button>
         <div class="right">
           <el-select v-model="value" placeholder="商品状" class="select">
             <el-option
@@ -18,17 +18,42 @@
         </div>
       </div>
     </div>
+    <Edit v-show="showDialog" ref="myChild"></Edit>
   </div>
+
 </template>
 <script>
+import Edit from "../../components/Edit/Edit"
 export default {
   name: "Audio",
   data(){
       return{
+        showDialog:false,
+        value:'已上架',
+        options:[
+          {
+            value:1,
+            label:'已上架'
+          },
+          {
+            value:0,
+            label:'已下架'
+          }
+        ],
+        input:''
       }
   },
   props:{
       ti:String
+  },
+  methods:{
+    handleAdd(){
+      this.showDialog = true
+      this.$refs.myChild.parentHandleclick()
+    },
+  },
+  components:{
+    Edit
   }
 
 };
